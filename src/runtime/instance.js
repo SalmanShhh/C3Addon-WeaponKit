@@ -16,8 +16,7 @@ export default function (parentClass) {
       this._burstDelay = Number(props[5]) || 0.05;
       this._reloadTime = Number(props[6]) || 2.0;
       this._autoReload = Boolean(props[7]);
-      this._reloadType = String(props[8]) || "magazine"; // magazine, per_bullet, ammo_regen
-      this._regenDelay = Number(props[9]) || 1.0;
+      this._reloadType = String(props[8]) || "magazine"; // magazine, per_bullet
       
       // Internal state
       this._fireCooldown = 0;
@@ -25,9 +24,6 @@ export default function (parentClass) {
       this._reloadTimer = 0;
       this._burstShotsRemaining = 0;
       this._burstTimer = 0;
-      
-      // Ammo regeneration: delay before regeneration starts
-      this._regenDelayTimer = 0;
 
       // / If enabled, start calling _tick() to processtimer updates
       this._setTicking(true);
@@ -46,32 +42,7 @@ export default function (parentClass) {
       }
       
       // Handle reload based on type
-      if (this._reloadType === "ammo_regen") {
-        // Ammo regeneration: wait for delay, then regenerate
-        if (this._regenDelayTimer > 0) {
-          this._regenDelayTimer -= dt;
-        } else if (this._currentAmmo < this._maxAmmo) {
-          // Calculate regen rate (1 ammo per reload_time seconds)
-          const ammoToAdd = (1 / this._reloadTime) * dt;
-          const oldAmmo = Math.floor(this._currentAmmo);
-          
-          this._currentAmmo = Math.min(this._currentAmmo + ammoToAdd, this._maxAmmo);
-          
-          // Trigger events when ammo increases to next whole number
-          const newAmmo = Math.floor(this._currentAmmo);
-          if (newAmmo > oldAmmo) {
-            this._trigger("OnPartialReload");
-            
-            if (this._currentAmmo >= this._maxAmmo) {
-              this._trigger("OnReloadComplete");
-            }
-          }
-          
-          this._isReloading = true;
-        } else {
-          this._isReloading = false;
-        }
-      } else if (this._isReloading) {
+      if (this._isReloading) {
         this._reloadTimer -= dt;
         if (this._reloadTimer <= 0) {
           if (this._reloadType === "per_bullet") {
@@ -116,14 +87,6 @@ export default function (parentClass) {
       
       this._currentAmmo--;
       this._fireCooldown = this._fireRate;
-      
-      // For ammo regeneration, reset delay timer after firing
-      if (this._reloadType === "ammo_regen") {
-        this._regenDelayTimer = this._regenDelay;
-        if (this._currentAmmo === 0) {
-          this._trigger("OnReloadStart");
-        }
-      }
       
       // Trigger fire event
       this._trigger("OnFire");
@@ -172,14 +135,6 @@ export default function (parentClass) {
       this._currentAmmo--;
       this._fireCooldown = this._fireRate;
       
-      // Reset regen delay for ammo regeneration
-      if (this._reloadType === "ammo_regen") {
-        this._regenDelayTimer = this._regenDelay;
-        if (this._currentAmmo === 0) {
-          this._trigger("OnReloadStart");
-        }
-      }
-      
       this._burstShotsRemaining = this._burstCount;
       this._fireBurstShot();
       return true;
@@ -209,13 +164,7 @@ export default function (parentClass) {
       if (this._currentAmmo >= this._maxAmmo) return false;
       
       this._isReloading = true;
-      
-      if (this._reloadType === "ammo_regen") {
-        // Start regeneration immediately (skip delay)
-        this._regenDelayTimer = 0;
-      } else {
-        this._reloadTimer = this._reloadTime;
-      }
+      this._reloadTimer = this._reloadTime;
       
       this._trigger("OnReloadStart");
       
@@ -252,11 +201,6 @@ export default function (parentClass) {
       
       this._isReloading = false;
       this._reloadTimer = 0;
-      
-      // For ammo regeneration, reset delay timer
-      if (this._reloadType === "ammo_regen") {
-        this._regenDelayTimer = 0;
-      }
       
       return true;
     }
@@ -313,12 +257,6 @@ export default function (parentClass) {
       if (!this._isReloading) return 0;
       if (this._reloadTime <= 0) return 1;
       
-      if (this._reloadType === "ammo_regen") {
-        // Return overall ammo percentage
-        if (this._maxAmmo <= 0) return 0;
-        return this._currentAmmo / this._maxAmmo;
-      }
-      
       return 1 - (this._reloadTimer / this._reloadTime);
     }
 
@@ -343,10 +281,8 @@ export default function (parentClass) {
         reloadTime: this._reloadTime,
         autoReload: this._autoReload,
         reloadType: this._reloadType,
-        regenDelay: this._regenDelay,
         isReloading: this._isReloading,
         reloadTimer: this._reloadTimer,
-        regenDelayTimer: this._regenDelayTimer,
       };
     }
 
@@ -360,10 +296,8 @@ export default function (parentClass) {
       this._reloadTime = o.reloadTime;
       this._autoReload = o.autoReload;
       this._reloadType = o.reloadType || "magazine";
-      this._regenDelay = o.regenDelay || 1.0;
       this._isReloading = o.isReloading;
       this._reloadTimer = o.reloadTimer || 0;
-      this._regenDelayTimer = o.regenDelayTimer || 0;
     }
 
     _getDebuggerProperties() {

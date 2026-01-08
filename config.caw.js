@@ -176,20 +176,9 @@ export const properties = [
       items: [
         { magazine: "Magazine Reload" },
         { per_bullet: "Per-Bullet Reload" },
-        { ammo_regen: "Ammo Regeneration" },
       ],
     },
     name: "Reload Type",
-    desc: "How the weapon reloads ammunition. Magazine: Traditional - press reload, wait full time, get full ammo; Per-Bullet: Reloads one bullet at a time over reload time; Ammo Regeneration: Ammo regenerates automatically over time after firing",
-  },
-  {
-    type: PROPERTY_TYPE.FLOAT,
-    id: "regen_delay",
-    options: {
-      initialValue: 1.0,
-      minValue: 0,
-    },
-    name: "Regeneration Delay",
-    desc: "Delay in seconds before ammo regeneration starts after firing (for Ammo Regeneration type only)",
+    desc: "How the weapon reloads ammunition. Magazine: Traditional - press reload, wait full time, get full ammo; Per-Bullet: Reloads one bullet at a time over reload time",
   },
 ];

@@ -700,18 +700,12 @@ action(
         items: [
           { magazine: "Magazine Reload" },
           { per_bullet: "Per-Bullet Reload" },
-          { ammo_regen: "Ammo Regeneration" },
         ],
       },
     ],
   },
   function (reloadType) {
     this._reloadType = reloadType;
-    
-    // Initialize regen delay if switching to ammo regeneration
-    if (reloadType === "ammo_regen") {
-      this._regenDelayTimer = 0;
-    }
   }
 );
 
@@ -754,7 +748,6 @@ condition(
         items: [
           { magazine: "Magazine Reload" },
           { per_bullet: "Per-Bullet Reload" },
-          { ammo_regen: "Ammo Regeneration" },
         ],
       },
     ],

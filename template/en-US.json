@@ -52,16 +52,11 @@
           },
           "reload_type": {
             "name": "Reload Type",
-            "desc": "How the weapon reloads ammunition. Magazine: Traditional - press reload, wait full time, get full ammo; Per-Bullet: Reloads one bullet at a time over reload time; Ammo Regeneration: Ammo regenerates automatically over time after firing",
+            "desc": "How the weapon reloads ammunition. Magazine: Traditional - press reload, wait full time, get full ammo; Per-Bullet: Reloads one bullet at a time over reload time",
             "items": {
               "magazine": "Magazine Reload",
-              "per_bullet": "Per-Bullet Reload",
-              "ammo_regen": "Ammo Regeneration"
+              "per_bullet": "Per-Bullet Reload"
             }
-          },
-          "regen_delay": {
-            "name": "Regeneration Delay",
-            "desc": "Delay in seconds before ammo regeneration starts after firing (for Ammo Regeneration type only)"
           }
         },
         "actions": {
@@ -224,8 +219,7 @@
                 "desc": "The reload type",
                 "items": {
                   "magazine": "Magazine Reload",
-                  "per_bullet": "Per-Bullet Reload",
-                  "ammo_regen": "Ammo Regeneration"
+                  "per_bullet": "Per-Bullet Reload"
                 }
               }
             }
@@ -309,8 +303,7 @@
                 "desc": "The reload type to compare",
                 "items": {
                   "magazine": "Magazine Reload",
-                  "per_bullet": "Per-Bullet Reload",
-                  "ammo_regen": "Ammo Regeneration"
+                  "per_bullet": "Per-Bullet Reload"
                 }
               }
             }
