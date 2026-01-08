@@ -3,7 +3,7 @@
 <i>Handle firing, reloading, ammo management, and multiple fire modes without complex events. Perfect for shooters, action games, and any project needing weapon systems.</i> <br>
 ### Version 1.1.0.0
 
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/SalmanShhh/simple_weapon/releases/download/salmanshh_simple_weapon-1.1.0.0.c3addon/salmanshh_simple_weapon-1.1.0.0.c3addon)
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/SalmanShhh/C3Addon-simple_weapon/releases/download/v1.0.0.0/salmanshh_simple_weapon-1.1.0.0.c3addon)
 <br>
 <sub> [See all releases](https://github.com/SalmanShhh/simple_weapon/releases) </sub> <br>
 
