@@ -886,7 +886,7 @@ condition(
     isInvertible: false,
     listName: "On partial reload",
     displayText: "{my}: On partial reload",
-    description: "Triggered when one bullet is loaded (Per-Bullet reload type only)",
+    description: "Triggered when one bullet is loaded (Per-Bullet and Passive Reload types)",
     params: [],
   },
   function () {

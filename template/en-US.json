@@ -345,7 +345,7 @@
           "OnPartialReload": {
             "list-name": "On partial reload",
             "display-text": "{my}: On partial reload",
-            "description": "Triggered when one bullet is loaded (Per-Bullet reload type only)",
+            "description": "Triggered when one bullet is loaded (Per-Bullet and Passive Reload types)",
             "params": {}
           },
           "OnPartialReloadStart": {
