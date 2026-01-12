@@ -17,6 +17,6 @@
   "1.2.0.0": {
     "added": "Introduces 'Speed Reload' and 'Passive Reload' types to weapon reload logic, including reserve ammo management for speed reload and automatic ammo regeneration for passive reload. Updates configuration, actions, expressions, and localization to support new reload types and reserve ammo",
     "changed": "refines reload time calculations for per-bullet and passive reloads.",
-    "fixed": "fixed compare reload type and Fire Mode fixed\nOn Reload Start triggers for Passive Reload"
+    "fixed": "+ fixed compare reload type and Fire Mode fixed\n+ On Reload Start triggers for Passive Reload\n+ Set isInvertible to true for fire mode and reload type conditions in aces.js, allowing these conditions to be negated. Also, trigger OnEmpty and auto-reload when attempting to fire with no ammo in instance.js."
   }
 }

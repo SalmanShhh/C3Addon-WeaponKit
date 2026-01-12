@@ -15,8 +15,9 @@ Introduces 'Speed Reload' and 'Passive Reload' types to weapon reload logic, inc
 refines reload time calculations for per-bullet and passive reloads.
 
 **Fixed:**
-fixed compare reload type and Fire Mode fixed
-On Reload Start triggers for Passive Reload
++ fixed compare reload type and Fire Mode fixed
++ On Reload Start triggers for Passive Reload
++ Set isInvertible to true for fire mode and reload type conditions in aces.js, allowing these conditions to be negated. Also, trigger OnEmpty and auto-reload when attempting to fire with no ammo in instance.js.
 
 <sub>[View full changelog](#changelog)</sub>
 
@@ -149,8 +150,9 @@ Introduces 'Speed Reload' and 'Passive Reload' types to weapon reload logic, inc
 refines reload time calculations for per-bullet and passive reloads.
 
 **Fixed:**
-fixed compare reload type and Fire Mode fixed
-On Reload Start triggers for Passive Reload
++ fixed compare reload type and Fire Mode fixed
++ On Reload Start triggers for Passive Reload
++ Set isInvertible to true for fire mode and reload type conditions in aces.js, allowing these conditions to be negated. Also, trigger OnEmpty and auto-reload when attempting to fire with no ammo in instance.js.
 ---
 
 ### Version 1.1.0.0

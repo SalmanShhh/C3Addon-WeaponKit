@@ -195,6 +195,13 @@ export default function (parentClass) {
     // Fire the weapon based on current fire mode
     fire() {
       if (!this.canFire()) {
+        // Trigger OnEmpty if we're out of ammo and not reloading
+        if (this._maxAmmo !== -1 && this._currentAmmo <= 0 && !this._isReloading) {
+          this._trigger("OnEmpty");
+          if (this._autoReload) {
+            this.startReload();
+          }
+        }
         return false;
       }
       
