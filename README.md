@@ -16,6 +16,7 @@ refines reload time calculations for per-bullet and passive reloads.
 
 **Fixed:**
 fixed compare reload type and Fire Mode fixed
+On Reload Start triggers for Passive Reload
 
 <sub>[View full changelog](#changelog)</sub>
 
@@ -149,6 +150,7 @@ refines reload time calculations for per-bullet and passive reloads.
 
 **Fixed:**
 fixed compare reload type and Fire Mode fixed
+On Reload Start triggers for Passive Reload
 ---
 
 ### Version 1.1.0.0
