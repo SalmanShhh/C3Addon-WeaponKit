@@ -272,10 +272,6 @@ WeaponKit implements `_getDebuggerProperties`, so live state appears in the C3 d
 | `reloadProgress` | Progress from `0` to `1`. |
 | `reserveAmmo` | Current reserve ammo (`Infinite` if `-1`). |
 
-### How to open debugger
-1. Preview your project.
-2. Press `F12` in Construct 3.
-3. Select an instance with WeaponKit and inspect behavior properties.
 
 Debugger-focused example:
 ```text
