@@ -18,8 +18,9 @@
 12. [Expressions Reference](#12-expressions-reference)
 13. [Triggers Reference](#13-triggers-reference)
 14. [Game Use Cases](#14-game-use-cases)
-15. [Feature Deep-Dives](#15-feature-deep-dives)
-16. [Tips and Common Mistakes](#16-tips-and-common-mistakes)
+15. [Other game use cases](#15-other-game-use-cases)
+16. [Feature Deep-Dives](#16-feature-deep-dives)
+17. [Tips and Common Mistakes](#17-tips-and-common-mistakes)
 
 ## 1. Core Concepts
 
@@ -611,7 +612,96 @@ Event: On load hotkey pressed
 ```
 Tip: validate restore visually using debugger `reloadProgress` field.
 
-## 15. Feature Deep-Dives
+### 18) Ammo pickup refill loop
+**Scenario:** Picking up a crate should top up the magazine and reserve pool without resetting the current burst setup.
+
+Event sheet:
+```text
+Event: Player overlaps AmmoCrate
+  Action: PlayerGun.WeaponKit -> Add ammo 8
+  Action: PlayerGun.WeaponKit -> Add reserve ammo 24
+  Action: Destroy AmmoCrate
+  // keeps the weapon usable while still rewarding the player
+```
+Tip: pair this with `On add ammo` to trigger pickup feedback and UI updates.
+
+### 19) Boss weapon phase switch
+**Scenario:** A boss weapon changes from burst fire to rapid automatic fire when health drops below half.
+
+Event sheet:
+```text
+Event: BossHP <= 50
+  Action: BossGun.WeaponKit -> Set fire mode to "automatic"
+  Action: BossGun.WeaponKit -> Set fire rate to 0.04
+  Action: BossGun.WeaponKit -> Reset fire cooldown
+```
+Tip: reset the cooldown after a mode change so the new pattern feels immediate.
+
+### 20) Reload interruption during combat
+**Scenario:** Players should be able to fire during a manual reload and stop the reload cleanly if the situation changes.
+
+Event sheet:
+```text
+Event: On R pressed
+  Action: Shotgun.WeaponKit -> Set reload type to "per_bullet"
+  Action: Shotgun.WeaponKit -> Start reload
+
+Event: Left Mouse Button pressed
+  Condition: Shotgun.WeaponKit Can fire
+  Action: Shotgun.WeaponKit -> Fire
+
+Event: On reload cancel
+  Action: HUDText -> Set text to "Reload interrupted"
+```
+Tip: use `Cancel reload` in your fallback path when the player swaps weapons or takes cover.
+
+### 21) Infinite reserve arcade mode
+**Scenario:** A prototype or arcade weapon should never run dry, but still keep the feel of a real reload timing window.
+
+Event sheet:
+```text
+Event: On Start of layout
+  Action: ArcadeGun.WeaponKit -> Set max ammo to 30
+  Action: ArcadeGun.WeaponKit -> Set current ammo to 30
+  Action: ArcadeGun.WeaponKit -> Set reserve ammo to -1
+  Action: ArcadeGun.WeaponKit -> Set reload type to "speed_reload"
+```
+Tip: treat `-1` as an infinite reserve in your HUD so the player sees a special state instead of a normal number.
+
+### 22) Low health tactical swap
+**Scenario:** A tactical rifle shifts to passive recharge when the player enters a stealth or energy-drain state.
+
+Event sheet:
+```text
+Event: PlayerEnergy <= 20
+  Action: TacticalRifle.WeaponKit -> Set reload type to "passive_reload"
+  Action: TacticalRifle.WeaponKit -> Set reload time to 0.35
+
+Event: PlayerEnergy > 20
+  Action: TacticalRifle.WeaponKit -> Set reload type to "magazine"
+```
+Tip: this works well for energy weapons, drones, and special ability loadouts that need a clear state change.
+
+## 15. Other game use cases
+
+- **Top-down arena shooter**: WeaponKit keeps the core gun loop simple so you can focus on enemy waves, spawn pressure, and hit reactions instead of custom ammo code.
+- **Twin-stick roguelite**: The behavior gives each weapon instance its own ammo and reload state, which makes pickups, weapon drops, and rare powerups easier to balance.
+- **Run-and-gun platformer**: Fast reload cycles and auto-reload help maintain momentum without adding extra timers to the player object.
+- **Horror survival game**: Dry-fire feedback and reserve economy fit well when every bullet matters and the player has to manage limited ammo.
+- **Sci-fi rail shooter**: Burst mode and high fire rate tuning support cinematic volleys and energy weapon feel without custom scripting.
+- **Tower defense**: WeaponKit can drive automated turrets and defensive emplacements that need consistent cooldown and reload rules.
+- **PvP arena brawler**: Per-instance weapon state prevents one player's gun from leaking into another player's object.
+- **Stealth infiltration game**: Silent reload and low-ammo warnings are easy to hook into your HUD and alert systems.
+- **Co-op wave defense**: Shared reload rules keep every class weapon consistent while still allowing per-object balancing.
+- **Mech combat game**: Large weapons with burst patterns and reserve pools benefit from simple event-sheet setup and clear state checks.
+- **Fantasy action RPG**: Enchantments and weapon buffs can change fire rate, burst size, and reload timing without rewriting the core loop.
+- **Cinematic cutscene weapon**: Scripted firing uses the same logic as live gameplay, which keeps cutscene effects and AI behavior aligned.
+- **Arcade score attack**: Infinite reserve or passive reload modes make it easy to tune short, fast rounds for high-score play.
+- **Multiplayer loadout game**: Different reload types can be assigned per weapon object so each class feels distinct.
+- **Educational prototype**: Beginners can learn shooting logic through readable events instead of internal timers and counter state.
+- **Hyper-casual mobile shooter**: Simple fire and reload rules keep performance low and the event sheet easy to maintain.
+
+## 16. Feature Deep-Dives
 
 ### Fire cooldown pipeline
 - `Fire` only succeeds when cooldown is clear and state allows firing.
@@ -652,7 +742,7 @@ Event: On weapon archetype selected "energy"
   Action: Weapon.WeaponKit -> Set reload time to 0.75
 ```
 
-## 16. Tips and Common Mistakes
+## 17. Tips and Common Mistakes
 
 - **Use `Can fire` for held input** to avoid unnecessary `Fire` calls every tick.
 - **Remember burst semantics**: one ammo currently powers an entire burst sequence.

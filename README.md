@@ -3,9 +3,9 @@
 <i>Build shooter mechanics in minutes, not hours. Handles firing modes (single/auto/burst), four reload types (magazine/per-bullet/speed/passive), ammo pools, and fire rate cooldowns. Comprehensive triggers and expressions let you create everything from pistols to miniguns without event spaghetti.</i> <br>
 ### Version 1.2.0.0
 
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/SalmanShhh/C3Addon-simple_weapon/releases/download/salmanshh_weaponkit-1.2.0.0.c3addon/salmanshh_weaponkit-1.2.0.0.c3addon)
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/SalmanShhh/C3Addon-WeaponKit/releases/download/salmanshh_weaponkit-1.2.0.0.c3addon/salmanshh_weaponkit-1.2.0.0.c3addon)
 <br>
-<sub> [See all releases](https://github.com/SalmanShhh/C3Addon-simple_weapon/releases) </sub> <br>
+<sub> [See all releases](https://github.com/SalmanShhh/C3Addon-WeaponKit/releases) </sub> <br>
 
 #### What's New in 1.2.0.0
 **Added:**
